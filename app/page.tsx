@@ -13,12 +13,12 @@ export default function Home() {
   const router = useRouter()
 
   useEffect(() => {
-    if (user) {
+    if (user.email) {
       router.push('/app')
     }
   }, [])
 
-  if (user) return <></>;
+  if (user.email) return <></>;
 
   return (
     <div className="h-screen w-screen flex flex-col gap-8">

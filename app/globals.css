@@ -73,3 +73,35 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* STYLES */
+
+.navbar-btn {
+  @apply h-10 w-10 bg-background rounded-xl hover:bg-background/90 hover:text-primary/90;
+}
+
+/* 
+.ai-btn {
+  @apply relative overflow-hidden;
+}
+
+.ai-btn::before {
+  background: conic-gradient(
+    rgb(238, 107, 118) 0deg,
+    rgb(175, 85, 235) 0deg,
+    rgb(85, 108, 235) 0deg,
+    rgb(132, 228, 252) 0deg,
+    rgb(132, 252, 192) 0deg,
+    rgb(132, 252, 138) 0deg,
+    rgb(226, 252, 132) 0deg,
+    rgb(252, 196, 132) 0deg,
+    rgb(252, 140, 132) 0deg,
+    transparent 120deg
+  );
+
+  @apply absolute h-[150%] w-[150%] left-[-25%] top-[-25%] content-[''] animate-border-spin;
+}
+
+.ai-btn-content {
+  @apply absolute w-[calc(100%-2px)] h-[calc(100%-2px)] top-[1px] left-[1px] bg-background rounded-md
+} */
