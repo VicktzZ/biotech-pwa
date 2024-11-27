@@ -6,8 +6,10 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { useLocalStorage } from "@/hooks/local-storage";
+import { useTheme } from "next-themes";
 
 export default function Home() {
+  const { systemTheme } = useTheme()
   const [formType, setFormType] = useState<'signin' | 'singup'>('signin')
   const [ user ] = useLocalStorage('user', { email: '', id: '' })
   const router = useRouter()
@@ -24,7 +26,7 @@ export default function Home() {
     <div className="h-screen w-screen flex flex-col gap-8">
       <div className="flex h-1/3 bg-gradient-to-r from-cyan-500 to-emerald-500 items-center justify-center">
         <Image alt="" height={200} width={200} className="relative bottom-10 md:bottom-0" src={"/images/white-logo.png"} />
-        <Image alt="" height={30} width={30} className="absolute top-[4vh] w-screen" src={"/svg/white-wave.svg"} />
+        <Image alt="" height={30} width={30} className="absolute top-[4vh] w-screen" src={`/svg/${systemTheme}-wave.svg`} />
       </div>
       <div className="flex flex-col gap-20">
         <div className="flex flex-col items-center justify-center gap-12">

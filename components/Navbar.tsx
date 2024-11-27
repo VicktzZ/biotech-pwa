@@ -19,7 +19,7 @@ export default function Navbar() {
   }
 
   return (
-    <div className='flex gap-6 p-4 justify-evenly items-center bg-emerald-500 w-screen h-16'>
+    <div className='flex gap-6 p-4 justify-evenly items-center bg-emerald-500 w-screen h-16 absolute bottom-0'>
       <Button onClick={() => router.push('/app')} variant='outline' className='navbar-btn'>
         <ChartNoAxesColumnIcon className='text-primary' />
       </Button>
