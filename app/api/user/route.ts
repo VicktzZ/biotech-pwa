@@ -34,6 +34,7 @@ export async function POST(req: Request) {
         const userRef = await addDoc(collection(db, "users"), {
             email,
             password: hashedPassword,
+            crops: {},
             createdAt: new Date()
         });
 

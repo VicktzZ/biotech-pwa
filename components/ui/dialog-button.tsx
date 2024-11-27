@@ -9,7 +9,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
+import { Button, ButtonProps } from "@/components/ui/button"
 
 type DialogButtonProps = {
     children: React.ReactNode
@@ -19,13 +19,14 @@ type DialogButtonProps = {
     cancel?: () => void
     btnClassName?: string
     dialogClassName?: string
+    variant?: ButtonProps["variant"]
 }
 
-export function DialogButton({ children, title, description, action, cancel, btnClassName, dialogClassName }: DialogButtonProps) {
+export function DialogButton({ children, title, description, action, cancel, btnClassName, dialogClassName, variant }: DialogButtonProps) {
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <Button className={btnClassName} variant="outline">
+                <Button className={btnClassName} variant={variant || "outline"}>
                     {children}
                 </Button>
             </AlertDialogTrigger>

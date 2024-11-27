@@ -7,18 +7,26 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export function InfoCard() {
+interface InfoCardProps {
+  title: string;
+  description?: string;
+  children: React.ReactNode | string;
+  className?: string;
+  footerContent?: React.ReactNode | string;
+}
+
+export function InfoCard({ title, description, children, className, footerContent }: InfoCardProps) {
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
-        <CardTitle>Card Title</CardTitle>
-        <CardDescription>Card Description</CardDescription>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <p>Card Content</p>
+        {children}
       </CardContent>
       <CardFooter>
-        <p>Card Footer</p>
+        {footerContent}
       </CardFooter>
     </Card>
   );
