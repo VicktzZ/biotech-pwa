@@ -20,16 +20,19 @@ type ModalProps = {
   className?: string
   open?: boolean
   setOpen?: (open: boolean) => void
+  noButton?: boolean
 }
 
-export function Modal({ variant, btnTitle, title, description, children, footer, className, open, setOpen }: ModalProps) {
+export function Modal({ variant, btnTitle, title, description, children, footer, className, open, setOpen, noButton }: ModalProps) {
   const [ openModal, setOpenModal ] = useState(false)
 
   return (
     <Dialog open={open || openModal}>
-      <DialogTrigger asChild>
-        <Button onClick={!setOpen ? (() => setOpenModal(true)) : (() => setOpen(true))} variant={variant || "outline"}>{btnTitle}</Button>
-      </DialogTrigger>
+      {noButton && (
+        <DialogTrigger asChild>
+          <Button onClick={!setOpen ? (() => setOpenModal(true)) : (() => setOpen(true))} variant={variant || "outline"}>{btnTitle}</Button>
+        </DialogTrigger>
+      )}
       <DialogContent onCloseAutoFocus={!setOpen ? (() => setOpenModal(false)) : (() => setOpen(false))} className={`sm:max-w-[425px] ${className}`}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>

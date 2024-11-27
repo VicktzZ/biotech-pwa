@@ -9,6 +9,7 @@ export type User = {
         developerMode: boolean
         gaiaShareData: boolean
         gaiaComplementaryMessages: string
+        firstTimeInGaiaAI: boolean
         plan: 'Freemium' | 'Premium' | 'Enterprise';
     }
 };
