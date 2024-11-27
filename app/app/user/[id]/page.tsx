@@ -17,7 +17,7 @@ export default function Page() {
     const [user, setUser] = useLocalStorage<{ email: string, id: string, settings: User['settings']} | null>('user')
     const [ open, setOpen ] = React.useState(false)
     const [ isLoading, setIsLoading ] = React.useState(false)
-    const [ pageUser, setPageUser ] = React.useState<User>()
+    const [ pageUser, setPageUser ] = React.useState<User>({} as User)
 
     const router = useRouter()
 
@@ -102,14 +102,14 @@ export default function Page() {
 
     return (
         <div className='flex flex-col gap-8'>
-            <p className='text-3xl'>Olá, {pageUser?.email.split('@')[0]}. 👋</p>
+            <p className='text-3xl'>Olá, {pageUser?.email?.split('@')[0]}. 👋</p>
 
             <div className='flex flex-col gap-4'>
                 <p className='text-xl'>Configurações</p>
                 <div className='flex flex-col gap-2'>
                     <div className='flex gap-3 items-center'>
                         <Checkbox 
-                            onCheckedChange={e => updateSettings({ settings: { ...pageUser!.settings, disableNotifications: Boolean(e) } }) } 
+                            onCheckedChange={e => updateSettings({ settings: { ...pageUser.settings, disableNotifications: Boolean(e) } }) } 
                             defaultChecked={pageUser?.settings?.disableNotifications} 
                             id='notifications' 
                         />
@@ -117,7 +117,7 @@ export default function Page() {
                     </div>
                     <div className='flex gap-3 items-center'>
                         <Checkbox 
-                            onCheckedChange={e => updateSettings({ settings: { ...pageUser!.settings, activeEnergySaving: Boolean(e) } }) } 
+                            onCheckedChange={e => updateSettings({ settings: { ...pageUser.settings, activeEnergySaving: Boolean(e) } }) } 
                             defaultChecked={pageUser?.settings?.activeEnergySaving} 
                             id='energy' 
                         />
@@ -125,7 +125,7 @@ export default function Page() {
                     </div>
                     <div className='flex gap-3 items-center'>
                         <Checkbox 
-                            onCheckedChange={e => updateSettings({ settings: { ...pageUser!.settings, developerMode: Boolean(e) } }) } 
+                            onCheckedChange={e => updateSettings({ settings: { ...pageUser.settings, developerMode: Boolean(e) } }) } 
                             defaultChecked={pageUser?.settings?.developerMode} 
                             id='dev' 
                         />
@@ -139,7 +139,7 @@ export default function Page() {
                 <div className='flex flex-col gap-6'>
                     <div className='flex gap-3 items-center'>
                         <Checkbox 
-                            onCheckedChange={e => updateSettings({ settings: { ...pageUser!.settings, gaiaShareData: Boolean(e) } }) } 
+                            onCheckedChange={e => updateSettings({ settings: { ...pageUser.settings, gaiaShareData: Boolean(e) } }) } 
                             defaultChecked={pageUser?.settings?.gaiaShareData} 
                             id='share-data' 
                         />
@@ -165,7 +165,7 @@ export default function Page() {
                     <div className='flex gap-3 items-center'>
                         <div className='flex gap-4 items-center'>
                             <p>Atual:</p>
-                            <Modal variant='default' className='h-screen min-w-max' btnTitle={pageUser?.settings.plan as string} title='Plano' description={pageUser?.settings.plan as string}>
+                            <Modal variant='default' className='h-screen min-w-max' btnTitle={pageUser?.settings?.plan as string} title='Plano' description={pageUser?.settings?.plan as string}>
                                 <div className='grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 overflow-y-scroll max-h-screen'>
                                     <InfoCard title='Freemium'>
                                         <div className='mb-4'>

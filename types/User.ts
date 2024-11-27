@@ -2,6 +2,7 @@ export type User = {
     email: string;
     id: string;
     createdAt: string
+    biotechNodeAmount: number
     settings: {
         disableNotifications: boolean
         activeEnergySaving: boolean

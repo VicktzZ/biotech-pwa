@@ -36,6 +36,7 @@ export async function POST(req: Request) {
             email,
             password: hashedPassword,
             createdAt: new Date(),
+            biotechNodeAmount: 1,
             settings: {
                 disableNotifications: false ,
                 activeEnergySaving: false,
