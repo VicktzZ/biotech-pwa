@@ -13,11 +13,12 @@ interface InfoCardProps {
   children: React.ReactNode | string;
   className?: string;
   footerContent?: React.ReactNode | string;
+  onClick?: () => void
 }
 
-export function InfoCard({ title, description, children, className, footerContent }: InfoCardProps) {
+export function InfoCard({ title, description, children, className, footerContent, onClick }: InfoCardProps) {
   return (
-    <Card className={className}>
+    <Card onClick={onClick} className={className}>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>

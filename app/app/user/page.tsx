@@ -76,7 +76,7 @@ export default function Page() {
                     <div className='flex gap-3 items-center'>
                         <div className='flex gap-4 items-center'>
                             <p>Atual:</p>
-                            <Modal className='h-screen min-w-max' btnTitle='Premium' title='Plano' description='Premium'>
+                            <Modal variant='default' className='h-screen min-w-max' btnTitle='Premium' title='Plano' description='Premium'>
                                 <div className='grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 overflow-y-scroll max-h-screen'>
                                     <InfoCard title='Freemium'>
                                         <div className='mb-4'>

@@ -15,6 +15,7 @@ export default function Page() {
   const [isFetching, setIsFetching] = useState(true)
   const [user] = useLocalStorage<User>('user')
   const [crops, setCrops] = useState<Crop[]>()
+  const [ oppenModal, setOppenModal ] = useState(false)
 
   useEffect(() => {
     setIsFetching(true)
@@ -38,10 +39,12 @@ export default function Page() {
     <div className="flex flex-col gap-8">
       <div>
         <Modal
+          open={oppenModal}
+          setOpen={setOppenModal}
           btnTitle="Adicionar uma plantação"
           title="Adicionar plantação"
         >
-          <CropForm />
+          <CropForm closeModal={() => setOppenModal(false)} />
         </Modal>
       </div>
       <div className='grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3'>

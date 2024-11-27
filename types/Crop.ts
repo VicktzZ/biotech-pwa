@@ -5,5 +5,6 @@ export type Crop = {
     amount: number,
     luminosity: boolean,
     humidity: number,
-    temperature: number
+    temperature: number,
+    ph: number
 }

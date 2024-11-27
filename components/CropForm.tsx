@@ -17,6 +17,7 @@ type CropFormProps = {
     defaultValues?: z.infer<typeof formSchema>
     btnTitle?: string
     loading?: boolean
+    closeModal?: () => void
 }
 
 const formSchema = z.object({
@@ -24,7 +25,7 @@ const formSchema = z.object({
     amount: z.string()
 })
 
-export function CropForm({ defaultValues, submit, btnTitle, loading }: CropFormProps) {
+export function CropForm({ defaultValues, submit, btnTitle, loading, closeModal }: CropFormProps) {
     const [isFormLoading, setIsFormLoading] = useState(false)
     const [user] = useLocalStorage<User>('user')
 
@@ -46,12 +47,12 @@ export function CropForm({ defaultValues, submit, btnTitle, loading }: CropFormP
                 iluminosity: random.bool(),
                 humidity: random.int(0, 100),
                 temperature: random.int(12, 38),
+                ph: random.int(0, 14),
                 userId: user.id
             })
         }).then(async res => await res.json())
 
-        console.log(res);
-
+        closeModal?.()
         setIsFormLoading(false)
     }
 

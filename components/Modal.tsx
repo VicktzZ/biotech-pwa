@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { useState } from "react"
 
 type ModalProps = {
   variant?: ButtonProps["variant"]
@@ -17,17 +18,19 @@ type ModalProps = {
   children: React.ReactNode
   footer?: React.ReactNode
   className?: string
-  open: boolean
-  setOpen: (open: boolean) => void
+  open?: boolean
+  setOpen?: (open: boolean) => void
 }
 
 export function Modal({ variant, btnTitle, title, description, children, footer, className, open, setOpen }: ModalProps) {
+  const [ openModal, setOpenModal ] = useState(false)
+
   return (
-    <Dialog open={open}>
+    <Dialog open={open || openModal}>
       <DialogTrigger asChild>
-        <Button onClick={() => setOpen(true)} variant={variant || "outline"}>{btnTitle}</Button>
+        <Button onClick={!setOpen ? (() => setOpenModal(true)) : (() => setOpen(true))} variant={variant || "outline"}>{btnTitle}</Button>
       </DialogTrigger>
-      <DialogContent className={`sm:max-w-[425px] ${className}`}>
+      <DialogContent onCloseAutoFocus={() => setOpenModal(false)} className={`sm:max-w-[425px] ${className}`}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>
