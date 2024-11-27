@@ -1,16 +1,15 @@
 import { db } from "@/services/firebase";
 import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 
-export async function GET(req: Request) {
-    const { searchParams } = new URL(req.url);
-    const userId = searchParams.get("id");
+export async function GET(_: Request, { params }: { params: { id: string } }) {
+    const { id } = params;
 
-    if (!userId) {
+    if (!id) {
         return Response.json({ message: "ID do usuário obrigatório", status: 400 });
     }
 
     try {
-        const userDocRef = doc(db, "users", userId);
+        const userDocRef = doc(db, "users", id);
         const userDoc = await getDoc(userDocRef);
 
         if (!userDoc.exists()) {
@@ -24,16 +23,15 @@ export async function GET(req: Request) {
     }
 }
 
-export async function DELETE(req: Request) {
-    const { searchParams } = new URL(req.url);
-    const userId = searchParams.get("id");
+export async function DELETE(_: Request, { params }: { params: { id: string } }) {
+    const { id } = params;
 
-    if (!userId) {
+    if (!id) {
         return Response.json({ message: "ID do usuário obrigatório", status: 400 });
     }
 
     try {
-        const userDocRef = doc(db, "users", userId);
+        const userDocRef = doc(db, "users", id);
         await deleteDoc(userDocRef);
 
         return Response.json({ message: "Usuário deletado com sucesso", status: 200 });
@@ -42,11 +40,9 @@ export async function DELETE(req: Request) {
     }
 }
 
-export async function PATCH(req: Request) {
-    const { searchParams } = new URL(req.url);
-    
+export async function PATCH(req: Request, { params }: { params: { id: string } }) {
     const body = await req.json();
-    const id = searchParams.get("id");
+    const { id } = params;
 
     if (!id) {
         return Response.json({ message: "ID do usuário obrigatório", status: 400 });

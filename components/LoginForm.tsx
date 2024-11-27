@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -18,34 +20,44 @@ import { useRouter } from 'next/navigation'
 import { useLocalStorage } from '@/hooks/local-storage'
 
 type Props = { type: 'signin' | 'singup' }
-const formSchema = z.object({
-    email: z.string().email({ message: "Endereço de email inválido" }),
-    password: z
-        .string()
-        .min(6, { message: "A senha precisa ter pelo menos 6 caracteres" }),
-    confirmPassword: z.string().optional(),
-})
-.superRefine(({ password, confirmPassword }, ctx) => {
-    if (password !== confirmPassword) {
-        ctx.addIssue({
-            code: "custom",
-            message: "As senhas devem ser iguais",
-            path: ["confirmPassword"],
-        })
-    }
-})
 
 export default function LoginForm({ type }: Props) {
+
+    const formSchema = type === 'singup' ? z.object({
+        email: z.string().email({ message: "Endereço de email inválido" }),
+        password: z
+            .string()
+            .min(6, { message: "A senha precisa ter pelo menos 6 caracteres" }),
+        confirmPassword: z.string().optional(),
+    })
+    .superRefine(({ password, confirmPassword }, ctx) => {
+        if (password !== confirmPassword) {
+            ctx.addIssue({
+                code: "custom",
+                message: "As senhas devem ser iguais",
+                path: ["confirmPassword"],
+            })
+        }
+    }) : z.object({
+        email: z.string().email({ message: "Endereço de email inválido" }),
+        password: z
+            .string()
+            .min(6, { message: "A senha precisa ter pelo menos 6 caracteres" }),
+    })
+
     const [isLoading, setIsLoading] = useState(false)
-    const [ user, setUser ] = useLocalStorage('user', { email: '', id: '' })
+    const [ , setUser ] = useLocalStorage('user', { email: '', id: '' })
     const router = useRouter()
     
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: {
+        defaultValues: type === 'singup' ? {
             email: "",
             password: "",
             confirmPassword: ""
+        } : {
+            email: "",
+            password: ""
         }
     })
 

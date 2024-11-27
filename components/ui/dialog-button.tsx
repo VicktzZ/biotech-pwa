@@ -10,6 +10,7 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button, ButtonProps } from "@/components/ui/button"
+import { ButtonLoading } from "./button-loading"
 
 type DialogButtonProps = {
     children: React.ReactNode
@@ -20,13 +21,16 @@ type DialogButtonProps = {
     btnClassName?: string
     dialogClassName?: string
     variant?: ButtonProps["variant"]
+    open: boolean
+    setOpen: (open: boolean) => void
+    loading?: boolean
 }
 
-export function DialogButton({ children, title, description, action, cancel, btnClassName, dialogClassName, variant }: DialogButtonProps) {
+export function DialogButton({ children, title, description, action, cancel, btnClassName, dialogClassName, variant, open, setOpen, loading }: DialogButtonProps) {
     return (
-        <AlertDialog>
+        <AlertDialog open={open}>
             <AlertDialogTrigger asChild>
-                <Button className={btnClassName} variant={variant || "outline"}>
+                <Button onClick={() => setOpen(true)} className={btnClassName} variant={variant || "outline"}>
                     {children}
                 </Button>
             </AlertDialogTrigger>
@@ -38,8 +42,11 @@ export function DialogButton({ children, title, description, action, cancel, btn
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                        <AlertDialogCancel onClick={cancel}>Cancelar</AlertDialogCancel>
-                        <AlertDialogAction onClick={action}>Continuar</AlertDialogAction>
+                    <AlertDialogCancel onClick={cancel || (() => setOpen(false))}>Cancelar</AlertDialogCancel>
+                    {loading ?
+                        <ButtonLoading />
+                        : <AlertDialogAction onClick={action}>Continuar</AlertDialogAction>
+                    }
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

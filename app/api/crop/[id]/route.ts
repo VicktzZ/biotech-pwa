@@ -1,9 +1,8 @@
 import { db } from "@/services/firebase";
-import { collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 
-export async function GET(req: Request) {
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get("id");
+export async function GET(_: Request, { params }: { params: { id: string } }) {
+    const { id } = params;
 
     if (!id) {
         return Response.json({ message: "ID da plantação obrigatório", status: 400 });
@@ -24,9 +23,8 @@ export async function GET(req: Request) {
     }
 }
 
-export async function PATCH(req: Request) {
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get("id");
+export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+    const { id } = params;
 
     if (!id) {
         return Response.json({ message: "ID da plantação obrigatório", status: 400 });
@@ -43,9 +41,8 @@ export async function PATCH(req: Request) {
     }
 }
 
-export async function DELETE(req: Request) {
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get("id");
+export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+    const { id } = params;
 
     if (!id) {
         return Response.json({ message: "ID da plantação obrigatório", status: 400 });

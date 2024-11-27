@@ -7,20 +7,29 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { DialogButton } from '@/components/ui/dialog-button'
 import { Textarea } from '@/components/ui/textarea';
 import { useLocalStorage } from '@/hooks/local-storage'
+import { User } from '@/types/User';
 import { CheckIcon, CircleIcon, LogOutIcon, XIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
 export default function Page() {
-    const [user, setUser] = useLocalStorage<{ email: string | null, id: string | null }>('user', { email: '', id: '' })
+    const [user, setUser] = useLocalStorage<{ email: string, id: string, settings: User['settings']} | null>('user')
+    const [ open, setOpen ] = React.useState(false)
+    const [ isLoading, setIsLoading ] = React.useState(false)
+
     const router = useRouter()
 
     const logout = () => {
-        setUser({ email: null, id: null })
+        setUser(null)
         router.push('/')
     }
 
-    const deleteAccount = () => { }
+    const deleteAccount = async () => { 
+        setIsLoading(true)
+        await fetch(`/api/user/${user?.id}`, { method: 'DELETE' })
+        setIsLoading(false)
+        logout()
+    }
 
     return (
         <div className='flex flex-col gap-8'>
@@ -38,8 +47,8 @@ export default function Page() {
                         <label htmlFor='energy'>Ativar economia de energia do Biotech Node</label>
                     </div>
                     <div className='flex gap-3 items-center'>
-                        <Checkbox id='energy' />
-                        <label htmlFor='energy'>Ativar modo desenvolvedor</label>
+                        <Checkbox id='dev' />
+                        <label htmlFor='dev'>Ativar modo desenvolvedor</label>
                     </div>
                 </div>
             </div>
@@ -48,8 +57,8 @@ export default function Page() {
                 <p className='text-xl'>Gaia AI</p>
                 <div className='flex flex-col gap-6'>
                     <div className='flex gap-3 items-center'>
-                        <Checkbox id='notifications' />
-                        <label htmlFor='notifications'>Permitir compartilhamento de dados</label>
+                        <Checkbox id='share-data' />
+                        <label htmlFor='share-data'>Permitir compartilhamento de dados</label>
                     </div>
                     <div className='flex flex-col gap-3'>
                         <div className='flex flex-col gap-1'>
@@ -179,6 +188,8 @@ export default function Page() {
                         title='Excluir conta'
                         description='Tem certeza que deseja excluir sua conta? Essa ação não pode ser desfeita.'
                         action={deleteAccount}
+                        open={open}
+                        setOpen={setOpen}
                     >
                         Excluir Conta
                     </DialogButton>

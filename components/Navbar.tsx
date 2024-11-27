@@ -24,11 +24,11 @@ export default function Navbar() {
           <p className='text-xs text-primary'>AI</p>
         </div>
       </Button>
-      <Button variant='outline' className='navbar-btn' onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
-        <SunMoonIcon className='text-primary' />
-      </Button>
       <Button onClick={() =>  router.push('/app/user/')} variant='outline' className='navbar-btn'>
         <UserIcon className='text-primary' />
+      </Button>
+      <Button variant='outline' className='navbar-btn' onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+        <SunMoonIcon className='text-primary' />
       </Button>
     </div>
   )
