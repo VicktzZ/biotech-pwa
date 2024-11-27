@@ -5,19 +5,28 @@ import { Modal } from '@/components/Modal';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DialogButton } from '@/components/ui/dialog-button'
+import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
 import { useLocalStorage } from '@/hooks/local-storage'
 import { User } from '@/types/User';
 import { CheckIcon, CircleIcon, LogOutIcon, XIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 export default function Page() {
     const [user, setUser] = useLocalStorage<{ email: string, id: string, settings: User['settings']} | null>('user')
     const [ open, setOpen ] = React.useState(false)
     const [ isLoading, setIsLoading ] = React.useState(false)
+    const [ pageUser, setPageUser ] = React.useState<User>()
 
     const router = useRouter()
+
+    const updateSettings = async (data: Partial<User>) => {
+        await fetch(`/api/user/${user?.id}`, { 
+            method: 'PATCH',
+            body: JSON.stringify(data)
+        })
+    }
 
     const logout = () => {
         setUser(null)
@@ -31,23 +40,95 @@ export default function Page() {
         logout()
     }
 
+    useEffect(() => {
+        const fetchUser = async () => {
+            setIsLoading(true)
+            const response = await fetch(`/api/user/${user?.id}`, {
+                method: 'GET',
+            });
+            const data = await response.json();
+            setPageUser(data);
+            setIsLoading(false)
+        };
+
+        fetchUser();
+    }, []);
+
+    if (isLoading) return (
+        <div className='flex flex-col gap-8'>
+            <Skeleton className='h-16' />
+            <div className='flex flex-col gap-8'>
+                <div>
+                    <Skeleton className='h-4' />
+                </div>
+                <div>
+                    <Skeleton className='h-4' />
+                    <Skeleton className='h-4' />
+                    <Skeleton className='h-4' />
+                </div>
+            </div>
+            <div className='flex flex-col gap-8'>
+                <div>
+                    <Skeleton className='h-4' />
+                </div>
+                <div>
+                    <Skeleton className='h-16' />
+                </div>
+            </div>
+            <div className='flex flex-col gap-8'>
+                <div>
+                    <Skeleton className='h-4' />
+                </div>
+                <div>
+                    <Skeleton className='h-4' />
+                </div>
+            </div>
+            <div className='flex flex-col gap-8'>
+                <div>
+                    <Skeleton className='h-4' />
+                </div>
+                <div className='flex flex-col gap-2'>
+                    <Skeleton className='h-10' />
+                    <Skeleton className='h-10' />
+                    <Skeleton className='h-10' />
+                </div>
+            </div>
+            <div className='flex gap-4 items-center'>
+                <Skeleton className='h-4 w-2/4' />
+                <Skeleton className='h-5 w-1/6' />
+            </div>
+        </div>
+    )
+
     return (
         <div className='flex flex-col gap-8'>
-            <p className='text-3xl'>Olá, Vitor. 👋</p>
+            <p className='text-3xl'>Olá, {pageUser?.email.split('@')[0]}. 👋</p>
 
             <div className='flex flex-col gap-4'>
                 <p className='text-xl'>Configurações</p>
                 <div className='flex flex-col gap-2'>
                     <div className='flex gap-3 items-center'>
-                        <Checkbox id='notifications' />
+                        <Checkbox 
+                            onCheckedChange={e => updateSettings({ settings: { ...pageUser!.settings, disableNotifications: Boolean(e) } }) } 
+                            defaultChecked={pageUser?.settings?.disableNotifications} 
+                            id='notifications' 
+                        />
                         <label htmlFor='notifications'>Desativar notificações</label>
                     </div>
                     <div className='flex gap-3 items-center'>
-                        <Checkbox id='energy' />
+                        <Checkbox 
+                            onCheckedChange={e => updateSettings({ settings: { ...pageUser!.settings, activeEnergySaving: Boolean(e) } }) } 
+                            defaultChecked={pageUser?.settings?.activeEnergySaving} 
+                            id='energy' 
+                        />
                         <label htmlFor='energy'>Ativar economia de energia do Biotech Node</label>
                     </div>
                     <div className='flex gap-3 items-center'>
-                        <Checkbox id='dev' />
+                        <Checkbox 
+                            onCheckedChange={e => updateSettings({ settings: { ...pageUser!.settings, developerMode: Boolean(e) } }) } 
+                            defaultChecked={pageUser?.settings?.developerMode} 
+                            id='dev' 
+                        />
                         <label htmlFor='dev'>Ativar modo desenvolvedor</label>
                     </div>
                 </div>
@@ -57,7 +138,11 @@ export default function Page() {
                 <p className='text-xl'>Gaia AI</p>
                 <div className='flex flex-col gap-6'>
                     <div className='flex gap-3 items-center'>
-                        <Checkbox id='share-data' />
+                        <Checkbox 
+                            onCheckedChange={e => updateSettings({ settings: { ...pageUser!.settings, gaiaShareData: Boolean(e) } }) } 
+                            defaultChecked={pageUser?.settings?.gaiaShareData} 
+                            id='share-data' 
+                        />
                         <label htmlFor='share-data'>Permitir compartilhamento de dados</label>
                     </div>
                     <div className='flex flex-col gap-3'>
@@ -65,7 +150,11 @@ export default function Page() {
                             <p>Informações complementares</p>
                             <p className='text-xs text-zinc-500'>Informações que a Gaia AI talvez precise saber</p>
                         </div>
-                        <Textarea />
+                        <Textarea 
+                            onBlur={async e => updateSettings({ settings: { ...user!.settings, gaiaComplementaryMessages: e.target.value } })}
+                            defaultValue={pageUser?.settings?.gaiaComplementaryMessages} 
+                            placeholder='Informações complementares' 
+                        />
                     </div>
                 </div>
             </div>
@@ -76,7 +165,7 @@ export default function Page() {
                     <div className='flex gap-3 items-center'>
                         <div className='flex gap-4 items-center'>
                             <p>Atual:</p>
-                            <Modal variant='default' className='h-screen min-w-max' btnTitle='Premium' title='Plano' description='Premium'>
+                            <Modal variant='default' className='h-screen min-w-max' btnTitle={pageUser?.settings.plan as string} title='Plano' description={pageUser?.settings.plan as string}>
                                 <div className='grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 overflow-y-scroll max-h-screen'>
                                     <InfoCard title='Freemium'>
                                         <div className='mb-4'>

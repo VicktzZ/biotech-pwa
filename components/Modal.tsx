@@ -30,7 +30,7 @@ export function Modal({ variant, btnTitle, title, description, children, footer,
       <DialogTrigger asChild>
         <Button onClick={!setOpen ? (() => setOpenModal(true)) : (() => setOpen(true))} variant={variant || "outline"}>{btnTitle}</Button>
       </DialogTrigger>
-      <DialogContent onCloseAutoFocus={() => setOpenModal(false)} className={`sm:max-w-[425px] ${className}`}>
+      <DialogContent onCloseAutoFocus={!setOpen ? (() => setOpenModal(false)) : (() => setOpen(false))} className={`sm:max-w-[425px] ${className}`}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>

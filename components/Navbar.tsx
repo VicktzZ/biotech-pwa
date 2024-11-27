@@ -5,8 +5,11 @@ import { Button } from './ui/button'
 import { ChartNoAxesColumnIcon, LeafIcon, SproutIcon, SunMoonIcon, UserIcon } from "lucide-react"
 import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
+import { useLocalStorage } from '@/hooks/local-storage';
+import { User } from '@/types/User';
 
 export default function Navbar() {
+  const [user] = useLocalStorage<User>('user')
   const { theme, setTheme } = useTheme()
   const router = useRouter()
 
@@ -24,7 +27,7 @@ export default function Navbar() {
           <p className='text-xs text-primary'>AI</p>
         </div>
       </Button>
-      <Button onClick={() =>  router.push('/app/user/')} variant='outline' className='navbar-btn'>
+      <Button onClick={() =>  router.push(`/app/user/${user.id}`)} variant='outline' className='navbar-btn'>
         <UserIcon className='text-primary' />
       </Button>
       <Button variant='outline' className='navbar-btn' onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>

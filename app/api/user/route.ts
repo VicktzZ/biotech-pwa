@@ -1,6 +1,7 @@
 import { db } from "@/services/firebase";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import bcrypt from 'bcrypt';
+import { User } from "@/types/User";
 
 export async function GET() {
     const userRef = collection(db, "users");
@@ -34,8 +35,15 @@ export async function POST(req: Request) {
         const userRef = await addDoc(collection(db, "users"), {
             email,
             password: hashedPassword,
-            crops: {},
-            createdAt: new Date()
+            createdAt: new Date(),
+            settings: {
+                disableNotifications: false ,
+                activeEnergySaving: false,
+                developerMode: false,
+                gaiaShareData: false,
+                gaiaComplementaryMessages: '',
+                plan: 'Premium'
+            }
         });
 
         return Response.json({ id: userRef.id, message: "Usuário criado com sucesso", status: 201 });

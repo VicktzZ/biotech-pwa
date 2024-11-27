@@ -1,7 +1,6 @@
 export type User = {
     email: string;
     id: string;
-    name: string;
     createdAt: string
     settings: {
         disableNotifications: boolean
@@ -9,6 +8,6 @@ export type User = {
         developerMode: boolean
         gaiaShareData: boolean
         gaiaComplementaryMessages: string
-        plan: 'freemium' | 'premium' | 'enterprise';
+        plan: 'Freemium' | 'Premium' | 'Enterprise';
     }
 };
