@@ -23,17 +23,17 @@ const formSchema = z.object({
     password: z
         .string()
         .min(6, { message: "A senha precisa ter pelo menos 6 caracteres" }),
-    // confirmPassword: z.string().optional(),
+    confirmPassword: z.string().optional(),
 })
-// .superRefine(({ password, confirmPassword }, ctx) => {
-//     if (password !== confirmPassword) {
-//         ctx.addIssue({
-//             code: "custom",
-//             message: "As senhas devem ser iguais",
-//             path: ["confirmPassword"],
-//         })
-//     }
-// })
+.superRefine(({ password, confirmPassword }, ctx) => {
+    if (password !== confirmPassword) {
+        ctx.addIssue({
+            code: "custom",
+            message: "As senhas devem ser iguais",
+            path: ["confirmPassword"],
+        })
+    }
+})
 
 export default function LoginForm({ type }: Props) {
     const [isLoading, setIsLoading] = useState(false)
@@ -45,14 +45,14 @@ export default function LoginForm({ type }: Props) {
         defaultValues: {
             email: "",
             password: "",
-            // confirmPassword: ""
+            confirmPassword: ""
         }
     })
 
 
     const handleSubmit = async (data: z.infer<typeof formSchema>) => {
         setIsLoading(true)
-        let res: { message: string, status: 200 | 401, id?: string }
+        let res: { message: string, status: 200 | 401, id?: string, error?: string }
 
         if (type === 'signin') {
             res = await fetch('/api/auth', {
@@ -72,7 +72,7 @@ export default function LoginForm({ type }: Props) {
             router.push('/app')
             setUser({ email: data.email, id: res.id as unknown as string })
         } else {
-            alert(res.message)
+            alert(res.message || res.error)
         }
     }
 
@@ -121,7 +121,7 @@ export default function LoginForm({ type }: Props) {
                     />
                 )}
                 {!isLoading ? (
-                    <Button type="submit">Entrar</Button>
+                    <Button type="submit">{type === 'singup' ? 'Cadastrar' : 'Entrar'}</Button>
                 ) : (
                     <ButtonLoading />
                 )}

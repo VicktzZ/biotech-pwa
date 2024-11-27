@@ -19,7 +19,6 @@ export default function page() {
         <InfoCard title="Plantações" description="Total de plantações">4</InfoCard>
         <InfoCard title="Umidade" description="Umidade volumétrica do solo">Boa</InfoCard>
         <InfoCard title="Plantado" description="Total já plantado">10000</InfoCard>
-        <InfoCard title="Despesas" description="Média dos gastos previstos para o próximo mês">R$10,00</InfoCard>
         <InfoCard title="Biotech Nodes" description="Quantidade de dispositivos ativos">5</InfoCard>
       </div>
 

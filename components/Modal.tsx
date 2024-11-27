@@ -15,7 +15,7 @@ type ModalProps = {
   variant?: ButtonProps["variant"]
   btnTitle: string
   title: string
-  description: string
+  description?: string
   children: React.ReactNode
   footer?: React.ReactNode
   className?: string

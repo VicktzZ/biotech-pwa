@@ -1,8 +1,9 @@
 export type Crop = {
     id: string,
+    userId: string,
     name: string,
-    amount: number
-    price: number
-    luminosity: boolean
-    humidity: number
+    amount: number,
+    luminosity: boolean,
+    humidity: number,
+    temperature: number
 }

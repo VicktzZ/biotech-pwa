@@ -154,6 +154,10 @@ export default function Page() {
                                             </div>
                                             <div className="flex gap-2 items-center">
                                                 <CheckIcon className='text-green-500' size={15} />
+                                                <p>Métricas avançadas</p>
+                                            </div>
+                                            <div className="flex gap-2 items-center">
+                                                <CheckIcon className='text-green-500' size={15} />
                                                 <p>Conta empresarial</p>
                                             </div>
                                         </div>
