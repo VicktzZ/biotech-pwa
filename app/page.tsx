@@ -23,8 +23,8 @@ export default function Home() {
   return (
     <div className="h-screen w-screen flex flex-col gap-8">
       <div className="flex h-1/3 bg-gradient-to-r from-cyan-500 to-emerald-500 items-center justify-center">
-        <Image alt="" height={200} width={200} className="relative bottom-10 md:bottom-0" src={"/images/white-logo.png"} />
-        <Image alt="" height={30} width={30} className="absolute top-[4vh] w-screen" src={`/svg/${ theme || systemTheme || 'light'}-wave.svg`} />
+        <Image alt="Logo" height={200} width={200} className="relative bottom-10 md:bottom-0" src={"/images/white-logo.png"} />
+        <Image alt="Wave" height={30} width={30} className="absolute top-[4vh] w-screen" src={`/svg/${ theme || systemTheme || 'light'}-wave.svg`} />
       </div>
       <div className="flex flex-col gap-20">
         <div className="flex flex-col items-center justify-center gap-12">

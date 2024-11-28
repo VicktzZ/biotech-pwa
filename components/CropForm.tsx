@@ -40,7 +40,7 @@ export function CropForm({ defaultValues, submit, btnTitle, loading, closeModal 
     const handleSubmit = async (data: z.infer<typeof formSchema>) => {
         setIsFormLoading(true)
 
-        const res = await fetch('/api/crop', {
+        await fetch('/api/crop', {
             method: 'POST',
             body: JSON.stringify({
                 ...data,

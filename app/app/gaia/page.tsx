@@ -53,7 +53,7 @@ export default function Page() {
 
   if (pageUser.settings?.firstTimeInGaiaAI === undefined || pageUser.settings?.firstTimeInGaiaAI === true) {
     return (
-      <Modal noButton className='h-screen min-w-max' title='Gaia AI' description='Termos de uso' open={modalTermsOpen} btnTitle="">
+      <Modal className='h-screen min-w-max' title='Gaia AI' description='Termos de uso' open={modalTermsOpen} btnTitle="">
         <div className='flex p-3 flex-col overflow-y-scroll min-h-screen h-full w-96'>
           <p className="font-bold">Termos e Condições da Biotech - GAIA</p>
           <br />

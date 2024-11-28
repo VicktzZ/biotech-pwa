@@ -13,7 +13,7 @@ export const RequireAuth = ({ children }: { children: JSX.Element | JSX.Element[
     if (!user?.email) {
       router.push("/");
     }
-  }, []);
+  }, [router, user?.email]);
 
   if (!user?.email) return <></>;
 

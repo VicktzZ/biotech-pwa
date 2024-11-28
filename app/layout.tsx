@@ -16,6 +16,8 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "Biotech",
+  description: "Biotech is an app to help farmers monitor their crops.",
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
@@ -28,14 +30,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-         <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

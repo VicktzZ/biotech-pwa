@@ -1,7 +1,7 @@
 import { db } from "@/services/firebase";
 import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export async function GET(_: Request, { params }: any) {
     const { id } = params;
 
     if (!id) {
@@ -23,7 +23,7 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
     }
 }
 
-export async function DELETE(_: Request, { params }: { params: { id: string } }) {
+export async function DELETE(_: Request, { params }: any) {
     const { id } = params;
 
     if (!id) {
@@ -40,7 +40,7 @@ export async function DELETE(_: Request, { params }: { params: { id: string } })
     }
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: Request, { params }: any) {
     const body = await req.json();
     const { id } = params;
 

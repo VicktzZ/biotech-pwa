@@ -38,24 +38,23 @@ export default function page() {
         setIsLoading(false)
       }
 
-      const getAllUserCrops = async () => {
-        const cropsRef = collection(db, "crops");
-        const q = query(cropsRef, where("userId", "==", user.id));
+      const cropsRef = collection(db, "crops");
+      const q = query(cropsRef, where("userId", "==", user.id));
 
-        const unsubscribe = onSnapshot(q, querySnapshot => {
-          const crops = querySnapshot.docs.map(doc => ({
-            ...doc.data(),
-            id: doc.id
-          })) as Crop[];
+      const unsubscribe = onSnapshot(q, querySnapshot => {
+        const crops = querySnapshot.docs.map(doc => ({
+          ...doc.data(),
+          id: doc.id
+        })) as Crop[];
 
-          setUserCrops(crops)
-        })
-      }
+        setUserCrops(crops)
+      })
 
       setIsLoading(true)
       await fetchUser()
-      await getAllUserCrops()
       setIsLoading(false)
+
+      return () => unsubscribe()
     })()
   }, [])
 
