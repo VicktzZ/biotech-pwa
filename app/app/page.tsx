@@ -81,7 +81,7 @@ export default function page() {
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Bar dataKey="value" fill="#10b981" />
+          <Bar dataKey="value" fill="#096c4b" />
         </BarChart>
       </ResponsiveContainer>
     </div>
