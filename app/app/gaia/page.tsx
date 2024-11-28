@@ -1,5 +1,6 @@
 'use client';
 
+import GaiaAIChat from "@/components/GaiaAI";
 import { Modal } from "@/components/Modal";
 import { Button } from "@/components/ui/button";
 import { ButtonLoading } from "@/components/ui/button-loading";
@@ -8,9 +9,9 @@ import { useLocalStorage } from "@/hooks/local-storage"
 import { User } from "@/types/User";
 import { useEffect, useState } from "react";
 
-export default function page() {
-  const [user, setUser] = useLocalStorage('user', { email: '', id: '', firstTimeInGaia: true })
-  const [modalTermsOpen, setModalTermsOpen] = useState(true)
+export default function Page() {
+  const [user] = useLocalStorage('user', { email: '', id: '', firstTimeInGaia: true })
+  const [modalTermsOpen] = useState(true)
   const [ termsCheckbox, setTermsCheckbox ] = useState(false)
   const [ isLoading, setIsLoading ] = useState(false)
   const [ pageUser, setPageUser ] = useState<User>({} as User)
@@ -60,7 +61,7 @@ export default function page() {
 
             <p className="font-black">1. Introdução</p>
             <p>
-              Os presentes Termos e Condições ("Termos") estabelecem o acordo legal entre você ("Usuário") e a Biotech ("Empresa") em relação ao uso do aplicativo GAIA ("Aplicativo") e dos serviços nele contidos. Ao acessar ou utilizar o Aplicativo, você concorda em cumprir integralmente estes Termos.
+              Os presentes Termos e Condições {'("Termos")'} estabelecem o acordo legal entre você {'("Usuário")'} e a Biotech {'("Empresa")'} em relação ao uso do aplicativo GAIA {'("Aplicativo")'} e dos serviços nele contidos. Ao acessar ou utilizar o Aplicativo, você concorda em cumprir integralmente estes Termos.
             </p>
 
             <p className="font-black">2. Descrição do Aplicativo</p>
@@ -136,6 +137,8 @@ export default function page() {
   }
 
   return (
-    <div></div>
+    <div>
+      <GaiaAIChat />
+    </div>
   )
 }

@@ -10,7 +10,7 @@ declare global {
             NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: string;
             NEXT_PUBLIC_FIREBASE_APP_ID: string;
             NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: string;
-            GROQ_API_KEY: string;
+            NEXT_PUBLIC_GROQ_AI_API_KEY: string
         }
     }
 }
